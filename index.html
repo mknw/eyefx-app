@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="author" content="Effect Network">\
+  <meta name="author" content="Effect Network">
   <title>EYEFX - trial</title>
   <!--link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-checkradio@2.1.2/dist/css/bulma-checkradio.min.css" -->
@@ -25,29 +25,41 @@
 		<script src="./js/calibration.js"></script>
 		<script src="./js/precision_calculation.js"></script>
 		<script src="./js/precision_store_points.js"></script>
+		<script src="./js/website_display.js"></script>
+		<!-- Latest compiled JavaScript -->
+		<script src="./js/resize_canvas.js"></script>
+		<script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
 
-	<nav id="webgazerNavbar" class="navbar navbar-default navbar-fixed-top">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<!-- The hamburger menu button -->
-				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-					<span class="icon-bar">Menu</span>
-				</button>
+		<nav class="navbar navbar-expand-sm navbar-dark bg-dark navbar-fixed-top">
+			<a class="navbar-header" href="#">EYEFX</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarText">
+				<ul class="navbar-nav">
+					<li class="nav-item">
+						<a class="nav-link" href="#">Skip task</a>
+					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Eye-tracking
+						</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+							<a class="dropdown-item" onclick="RestartCalibration()" href="#">Recalibrate</a>
+							<a class="dropdown-item" onclick="webgazer.applyKalmanFilter(!webgazer.params.applyKalmanFilter)" href="#">Toggle Kalman Filter</a>
+							<a class="dropdown-item" onclick="webgazer.showFaceOverlay(!webgazer.params.showFaceOverlay)" href="#">Toggle Face Overlay</a>
+							<a class="dropdown-item" onclick="webgazer.showVideo(!webgazer.params.showVideo)" href="#">Toggle Video</a>
+							<a class="dropdown-item" onclick="webgazer.showFaceFeedbackBox(!webgazer.params.showFaceFeedbackBox)" href="#">Toggle Feedback Box</a>
+							<a class="dropdown-item" onclick="HideAllWebgazerPreviews()" href="#">Hide All</a>
+						</div>
+					</li>
+				</ul>
+				<span id="Accuracy" class="navbar-text">
+					Not yet Calibrated
+				</span>
 			</div>
+		</nav>
 
-			<div class="collapse navbar-collapse" id="myNavbar">
-				<ul class="nav navbar-nav">
-					<!-- Accuracy -->
-					<li id="Accuracy"><a>Not yet Calibrated</a></li>
-					<li><a onclick="Restart()" href="#">Recalibrate</a></li>
-					<li><a onclick="webgazer.applyKalmanFilter(!webgazer.params.applyKalmanFilter)" href="#">Toggle Kalman Filter</a></li>
-				</ul>
-				<ul class="nav navbar-nav navbar-right">
-					<li><button class="helpBtn" data-toggle="modal" data-target="#helpModal"><a data-toggle="modal"><span class="glyphicon glyphicon-cog"></span> Help</a></li>
-				</ul>
-			</div>
-		</div>
-	</nav>
 	<div class="calibrationDiv">
 			<input type="button" class="Calibration" id="Pt1"></input>
 			<input type="button" class="Calibration" id="Pt2"></input>
@@ -71,26 +83,15 @@
 				</div>
 				<div class="modal-footer">
 					<button id="closeBtn" type="button" class="btn btn-default" data-dismiss="modal">Close & load saved model </button>
-					<button type="button" id='start_calibration' class="btn btn-primary" data-dismiss="modal" onclick="Restart()">Calibrate</button>
+					<button type="button" id='start_calibration' class="btn btn-primary" data-dismiss="modal" onclick="RestartCalibration()">Calibrate</button>
 				</div>
 			</div>
 
 		</div>
 	</div>
 
-	<!-- div class="container has-text-centered">
-		
-	<button type='button' onclick='calibrate()'> Calibrate </button>
-	<hr>
+	<iframe hidden class="website-display" src="https://wikipedia.org" visibility="hidden"></iframe>
+   <!-- button type="submit" class="button is-primary is-large mt-6">Submit</button-->
 
-	<button type="button" onclick='fetchWebsite()'>Show Website</button>
-	<hr>
-
-   <button type="submit" class="button is-primary is-large mt-6">Submit</button>
-	</div-->
-
-	 <!-- Latest compiled JavaScript -->
-	 <script src="./js/resize_canvas.js"></script>
-	 <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
 
 </body>

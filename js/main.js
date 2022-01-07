@@ -37,9 +37,17 @@ window.onbeforeunload = function() {
 /**
  * Restart the calibration process by clearing the local storage and reseting the calibration point
  */
-function Restart(){
+function RestartCalibration(){
     document.getElementById("Accuracy").innerHTML = "<a>Not yet Calibrated</a>";
+    // document.getElementBy // should 
     webgazer.clearData();
     ClearCalibration();
     PopUpInstruction();
+}
+
+function HideAllWebgazerPreviews(){
+	webgazer.applyKalmanFilter(false);
+	webgazer.showFaceOverlay(false);
+	webgazer.showVideo(false);
+	webgazer.showFaceFeedbackBox(false);
 }
