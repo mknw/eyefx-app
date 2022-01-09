@@ -1,0 +1,15 @@
+{
+  "name": "effect.network",
+  "version": "1.0.0",
+  "description": "test to re-build a website for eyetracking",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "serve": "browser-sync start --server --files *"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "browser-sync": "^2.27.7"
+  }
+}

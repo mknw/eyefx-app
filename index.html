@@ -3,14 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="author" content="Effect Network">
   <title>EYEFX - trial</title>
   <!--link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-checkradio@2.1.2/dist/css/bulma-checkradio.min.css" -->
 
 	<link rel="stylesheet" type="text/css" href="./css/style.css">
 	<link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
+	<script src="./node_modules/jquery/dist/jquery.min.js"></script>
 	<script src="./js/webgazer.js"></script>
+	<script src="./js/calibration.js"></script>
 	<script src="./js/main.js"></script>
 </head>
 
@@ -18,17 +19,11 @@
 	<!-- Shows face within optimal detection window. -->
 	<canvas id="plotting_canvas" width="500" height="500" style="cursor:crosshair;"></canvas>
 	
-		<script src="./node_modules/jquery/dist/jquery.min.js"></script>
 		<script src="./node_modules/sweetalert/dist/sweetalert.min.js"></script>
-		
-		<script src="./js/main.js"></script>
-		<script src="./js/calibration.js"></script>
 		<script src="./js/precision_calculation.js"></script>
 		<script src="./js/precision_store_points.js"></script>
-		<script src="./js/website_display.js"></script>
-		<!-- Latest compiled JavaScript -->
-		<script src="./js/resize_canvas.js"></script>
-		<script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+		
+		<!-- script src="./js/website_display.js"></script-->
 
 		<nav class="navbar navbar-expand-sm navbar-dark bg-dark navbar-fixed-top">
 			<a class="navbar-header" href="#">EYEFX</a>
@@ -89,9 +84,12 @@
 
 		</div>
 	</div>
-
-	<iframe hidden class="website-display" src="https://wikipedia.org" visibility="hidden"></iframe>
+	<div id="websiteContainer">
+		<iframe id="websiteDisplay" src="ws-cache/index.html"> </iframe> <!-- external website is: "https://effect.network/token-page"></iframe-->
+	</div>
    <!-- button type="submit" class="button is-primary is-large mt-6">Submit</button-->
+	<script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script src="./js/resize_canvas.js"></script>
 
 
 </body>

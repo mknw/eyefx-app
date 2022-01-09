@@ -9,6 +9,10 @@ function ClearCanvas(){
   var canvas = document.getElementById("plotting_canvas");
   canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
 }
+function DeleteCanvas(){
+  var canvas = document.getElementById("plotting_canvas");
+  canvas.style.display = "none";
+}
 
 /**
  * Show the instruction of using calibration at the start up screen.
@@ -106,6 +110,9 @@ $(document).ready(function(){
                           if (isConfirm){
                             //clear the calibration & hide the last middle button
                             ClearCanvas();
+                            DeleteCanvas();
+                            ShowWebsite()
+
                           } else {
                             //use restart function to restart the calibration
                             document.getElementById("Accuracy").innerHTML = "<a>Not yet Calibrated</a>";
@@ -139,6 +146,7 @@ function ClearCalibration(){
   $(".Calibration").css('background-color','red');
   $(".Calibration").css('opacity',0.2);
   $(".Calibration").prop('disabled',false);
+  $("#plotting-canvas").css('display', '');
 
   CalibrationPoints = {};
   PointCalibrate = 0;

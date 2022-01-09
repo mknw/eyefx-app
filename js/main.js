@@ -43,11 +43,25 @@ function RestartCalibration(){
     webgazer.clearData();
     ClearCalibration();
     PopUpInstruction();
+    var canvas = document.getElementById("plotting_canvas");
+    canvas.style.display = "";
+    websiteDisplay = document.getElementById("websiteContainer");
+    websiteDisplay.style.display = "none"
 }
 
 function HideAllWebgazerPreviews(){
-	webgazer.applyKalmanFilter(false);
 	webgazer.showFaceOverlay(false);
 	webgazer.showVideo(false);
 	webgazer.showFaceFeedbackBox(false);
 }
+
+/**
+  * The webpage code.
+  **/
+function ShowWebsite() {
+	websiteDisplay = document.getElementById("websiteContainer");
+	websiteDisplay.style.display = "block"
+}
+
+
+
