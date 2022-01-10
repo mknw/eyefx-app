@@ -116,6 +116,7 @@ function OperateCalibration(){
                             //clear the calibration & hide the last middle button
                             //ClearCanvas();
                             DeleteCanvas();
+									 webgazer.clearGazeListener()
                             ShowWebsite()
 
                           } else {

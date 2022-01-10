@@ -1,17 +1,14 @@
 window.onload = async function() {
 
-    webgazer.params.showVideoPreview = true;
-    //start the webgazer tracker
-    //CreateCalibrationTracker()
-    //Set up the webgazer video feedback.
-    var setup = function() {
-        //Set up the main canvas. The main canvas is used to calibrate the webgazer.
-        var canvas = document.getElementById("plotting_canvas");
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        canvas.style.position = 'fixed';
-    };
-    setup();
+	webgazer.params.showVideoPreview = true;
+	var setup = function() {
+		//Set up the main canvas. The main canvas is used to calibrate the webgazer.
+		var canvas = document.getElementById("plotting_canvas");
+		canvas.width = window.innerWidth;
+		canvas.height = window.innerHeight;
+		canvas.style.position = 'fixed';
+	};
+	setup();
 };
 
 
@@ -22,34 +19,62 @@ window.onbeforeunload = function() {
 }
 
 var outputInteraction = []
+var outputCalibration = []
 
-async function CreateCalibrationTracker() {
-	await webgazer.setRegression('ridge') /* Ridge regression + Kalman Filter */
-        // .setGazeListener(function(data, clock) {
-          //   console.log(data); /* data is an object containing an x and y key which are the x and y prediction coordinates (no bounds limiting) */
-          //   console.log(clock); 
-        //})
-        .saveDataAcrossSessions(true)
-        .begin();
-        webgazer.showVideoPreview(true)
-        .showPredictionPoints(true); /* change to false to remove red dot */
+function CreateCalibrationTracker() {
+	webgazer.setRegression('ridge') /* Ridge regression + Kalman Filter */
+		.saveDataAcrossSessions(true)
+		.begin();
+		webgazer.showVideoPreview(true);
+		webgazer.showPredictionPoints(true); /* change to false to remove red dot */
 }
 
 /**
  * Restart the calibration process by clearing the local storage and resetting the calibration point
  */
+UserCalibrationInput = []
+
+function StartCalibration(){
+	document.getElementById("Accuracy").innerHTML = "<a>Not yet Calibrated</a>";
+	// document.getElementBy // should 
+	// webgazer.clearData();
+	ClearCalibration();
+	CreateCalibrationTracker()
+	webgazer.setGazeListener(function(clock, data){
+		outputCalibration.push({
+			ms: clock, // elapsed MS since webgazer.begin() was called
+			x: data.x, // More info avail in the `data` object. It's 
+			y: data.y  // possible to console.log to see what's in it.
+		});
+	})
+	PopUpInstruction();
+	var canvas = document.getElementById("plotting_canvas");
+	canvas.style.display = "";
+	websiteDisplay = document.getElementById("websiteContainer");
+	websiteDisplay.style.display = "none"
+	// OperateCalibration()
+}
 function RestartCalibration(){
-    document.getElementById("Accuracy").innerHTML = "<a>Not yet Calibrated</a>";
-    // document.getElementBy // should 
-    // webgazer.clearData();
-    ClearCalibration();
-    CreateCalibrationTracker()
-    PopUpInstruction();
-    var canvas = document.getElementById("plotting_canvas");
-    canvas.style.display = "";
-    websiteDisplay = document.getElementById("websiteContainer");
-    websiteDisplay.style.display = "none"
-    // OperateCalibration()
+	outputCalibration = []
+	document.getElementById("Accuracy").innerHTML = "<a>Not yet Calibrated</a>";
+	webgazer.clearData();
+	// ClearCalibration();
+	// CreateCalibrationTracker()
+	webgazer.setRegression('ridge').setGazeListener(function(clock, data){
+		outputCalibration.push({
+			ms: clock, // elapsed MS since webgazer.begin() was called
+			x: data.x, // More info avail in the `data` object. It's 
+			y: data.y  // possible to console.log to see what's in it.
+		});
+	}) // no begin()
+	webgazer.showVideoPreview(true);
+	webgazer.showPredictionPoints(true);
+	PopUpInstruction();
+	var canvas = document.getElementById("plotting_canvas");
+	canvas.style.display = "";
+	websiteDisplay = document.getElementById("websiteContainer");
+	websiteDisplay.style.display = "none"
+	OperateCalibration()
 }
 
 function HideAllWebgazerPreviews(){
@@ -65,6 +90,7 @@ function ShowWebsite() {
 	webgazer.showVideoPreview(false) // slows down tracking by a lottt
 	websiteDisplay = document.getElementById("websiteContainer");
 	websiteDisplay.style.display = "block"
+	// Gaze Listener is cleared at the end of each `OperateCalibration()` call.
 	webgazer.setGazeListener(function(data, clock) {
 				// (X, Y) coordinates: data.x, data.y: 
 				outputInteraction.push({
@@ -95,8 +121,7 @@ function SkipTask() {
 				eyetrackDataInput = document.getElementById("eyetracking-data");
 				userSubmissionInput.value = 'invalid';
 				eyetrackDataInput.value = 'invalid';
-				// SUBMIT PROGRAMMATICALLY
-				break
+				// SUBMIT PROGRAMMATICALLY break
 
 			case "recalibrate":
 				RestartCalibration(); // FIX
@@ -123,10 +148,14 @@ function ShowInputPrompt() {
 			closeModal: true,
 		}
 	}).then(answer => {
+
+			$('#submissionModal').modal('show');
 			userSubmissionInput = document.getElementById("user-submission");
 			eyetrackDataInput = document.getElementById("eyetracking-data");
+			eyetrackCalibInput = document.getElementById("calibration-data");
 			userSubmissionInput.value = answer
 			eyetrackDataInput.value = JSON.stringify(outputInteraction)
+			eyetrackCalibInput.value = JSON.stringify(outputCalibration)
 			swal({
 				text: 'Thank you for contributing! Your EFX will be transferred to your account once your submission has been validated. To earn more EFX, start another batch!',
 				icon: "success",

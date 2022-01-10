@@ -81,7 +81,7 @@
 				</div>
 				<div class="modal-footer">
 					<button id="closeBtn" type="button" class="btn btn-default" data-dismiss="modal">Close & load saved model </button>
-					<button type="button" id='start_calibration' class="btn btn-primary" data-dismiss="modal" onclick="RestartCalibration()">Calibrate</button>
+					<button type="button" id='start_calibration' class="btn btn-primary" data-dismiss="modal" onclick="StartCalibration()">Calibrate</button>
 				</div>
 			</div>
 
@@ -91,8 +91,27 @@
 		<iframe id="websiteDisplay" src="https://effect.network/token-page"></iframe> 
 	</div>
 
-	<input hidden type='text' id="user-submission"></input>
-	<input hidden type='text' id="eyetracking-data" maxlength=""></input>
+	<!-- submission modal -->
+	<div id="submissionModal" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-body">
+					<p> 'Thank you for contributing! Your EFX will be transferred to your account once your submission has been validated. To earn more EFX, start another batch!'</p>
+					<input hidden type='text' id="user-submission"></input>
+					<input hidden type='text' id="eyetracking-data" maxlength=""></input>
+					<input hidden type='text' id="calibration-data" maxlength=""></input>
+				</div>
+				<div class="modal-footer">
+					<button id="closeBtn" type="button" class="btn btn-default" data-dismiss="modal">Close & load saved model </button>
+					<button type="submit" id='end-task' class="btn btn-primary" data-dismiss="modal">Calibrate</button>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
    <!--button type="submit" id="close-app" class="button is-primary is-large mt-6">Submit</button-->
 
 	<!--these last-->
