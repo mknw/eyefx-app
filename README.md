@@ -1,13 +1,12 @@
 # eyetracking webpage
 
 Novel HCI, UX testing and cognitive experimentation, all in one package.
+More information on the function of this package are present at: github.com/mknw/eyefx/readme.md
 
 ## Usage
 
-1. Fork this repo
-2. Clone it
-3. `cd eyetracking-webpage`
-4. alter scrape-ws.js as needed
-5. run: `node scrape-ws.js`
-6. git push
-7. 
+Before running the app, make sure to have node installed.
+
+	cd eyefx
+	npm i
+	npm run serve
