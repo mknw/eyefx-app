@@ -36,7 +36,7 @@
 						<a class="nav-link" href="#" onclick="SkipTask()">Skip task</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link disabled" href="#" onclick="ShowInputPrompt()">Done</a>
+						<a id="submitAnswer" class="nav-link disabled" href="#" onclick="ShowInputPrompt()">Done</a>
 					</li>
 					<li class="nav-item dropdown"> <!-- eye tracking options -->
 						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -81,17 +81,19 @@
 				</div>
 				<div class="modal-footer">
 					<button id="closeBtn" type="button" class="btn btn-default" data-dismiss="modal">Close & load saved model </button>
-					<button type="button" id='start_calibration' class="btn btn-primary" data-dismiss="modal" onclick="StartCalibration()">Calibrate</button>
+					<button type="button" id='start_calibration' class="btn btn-primary" data-dismiss="modal" cursor="pointer" onclick="StartCalibration()">Calibrate</button>
 				</div>
 			</div>
 
 		</div>
 	</div>
 	<div id="websiteContainer">
-		<iframe id="websiteDisplay" src="https://effect.network/token-page"></iframe> 
+		<!-- '${TestWebsite}'-->
+		<iframe id="websiteDisplay" src="https://effect.network/token-page" scrolling="no"></iframe> 
 	</div>
 
 	<!-- submission modal -->
+	<p hidden id='input-prompt'>Via which platforms can you buy EFX?</p> <!-- '${InputPrompt}'-->
 	<div id="submissionModal" class="modal fade" role="dialog">
 		<div class="modal-dialog">
 
@@ -104,8 +106,7 @@
 					<input hidden type='text' id="calibration-data" maxlength=""></input>
 				</div>
 				<div class="modal-footer">
-					<button id="closeBtn" type="button" class="btn btn-default" data-dismiss="modal">Close & load saved model </button>
-					<button type="submit" id='end-task' class="btn btn-primary" data-dismiss="modal">Calibrate</button>
+					<button type="submit" id='end-task' class="btn btn-primary" data-dismiss="modal">End Task</button>
 				</div>
 			</div>
 

@@ -89,7 +89,9 @@ function HideAllWebgazerPreviews(){
 function ShowWebsite() {
 	webgazer.showVideoPreview(false) // slows down tracking by a lottt
 	websiteDisplay = document.getElementById("websiteContainer");
-	websiteDisplay.style.display = "block"
+	websiteDisplay.style.display = "block";
+	$('#submitAnswer').removeClass('disabled');
+	$('#submitAnswer').disabled = false;
 	// Gaze Listener is cleared at the end of each `OperateCalibration()` call.
 	webgazer.setGazeListener(function(data, clock) {
 				// (X, Y) coordinates: data.x, data.y: 
@@ -107,28 +109,33 @@ function SkipTask() {
 		title: "Are you sure?",
 		text: "We cannot grant this campaign will be available in the future. If something changed in the setting, such as head position or light condition, you can opt to Recalibrate the eye-tracker.",
 		icon: "warning",
-		buttons: {
-			cancel: "Back to task", 
-			skip: true,
-			Recalibrate: true,
-		},
 		dangerMode: true,
+		closeOnClickOutside: false,
+		buttons: [
+			{
+			text: 'Recalibrate',
+			value: false,
+			visible: true
+			},
+			{
+			text: 'Skip',
+			value: true,
+			visible: true,
+			},
+		]
 	}).then((willSkip) => {
-		switch (willSkip) {
-			case "skip":
-				swal("Terminating...");
-				userSubmissionInput = document.getElementById("user-submission");
-				eyetrackDataInput = document.getElementById("eyetracking-data");
-				userSubmissionInput.value = 'invalid';
-				eyetrackDataInput.value = 'invalid';
-				// SUBMIT PROGRAMMATICALLY break
-
-			case "recalibrate":
-				RestartCalibration(); // FIX
-
-			default:
-				// do nothing
-				console.log('Skipping the skipping.')
+		if (willSkip) {
+			console.log('Skipping task...')
+			userSubmissionInput = document.getElementById("user-submission");
+			eyetrackDataInput = document.getElementById("eyetracking-data");
+			eyetrackCalibInput = document.getElementById("calibration-data");
+			userSubmissionInput.value = 'invalid';
+			eyetrackDataInput.value = 'invalid';
+			eyetrackCalibInput.value = 'invalid';
+			swal("Terminating...");
+			// SUBMIT PROGRAMMATICALLY break
+		} else {
+			RestartCalibration(); // FIX
 		}
 	});
 }
@@ -136,30 +143,33 @@ function SkipTask() {
 
 
 function ShowInputPrompt() {
-	webgazer.end() // todo: check if conflicts with window.onbeforeunload (or removethe latter altogether)
-	// add input questions
+	webgazer.clearGazeListener() 
+	var InputPrompt = document.getElementById('input-prompt').innerHTML
 	
+	// Input Questions
 	swal({
 		title: 'Answer the prompt:',
-		text: 'What are the name of the authors of the White Paper published by Effect AI?', 
+		text: InputPrompt, 
 		content: 'input', 
+		//allowOutsideClick: false,
+		closeOnClickOutside: false,
 		button: {
 			text: "Submit",
 			closeModal: true,
 		}
 	}).then(answer => {
 
-			$('#submissionModal').modal('show');
 			userSubmissionInput = document.getElementById("user-submission");
 			eyetrackDataInput = document.getElementById("eyetracking-data");
 			eyetrackCalibInput = document.getElementById("calibration-data");
 			userSubmissionInput.value = answer
 			eyetrackDataInput.value = JSON.stringify(outputInteraction)
 			eyetrackCalibInput.value = JSON.stringify(outputCalibration)
-			swal({
+			$('#submissionModal').modal('show');
+			/* swal({
 				text: 'Thank you for contributing! Your EFX will be transferred to your account once your submission has been validated. To earn more EFX, start another batch!',
 				icon: "success",
 				button: "Terminate"
-			})
+			}) */
 	})
 }
