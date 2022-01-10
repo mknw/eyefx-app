@@ -7,6 +7,8 @@ More information on the function of this package are present at: github.com/mknw
 
 Before running the app, make sure to have node installed.
 
-	cd eyefx
+To run, pull up the terminal and type:
+
+	cd <repository-name>
 	npm i
 	npm run serve
