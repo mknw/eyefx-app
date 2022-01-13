@@ -9,6 +9,6 @@ Before running the app, make sure to have node installed.
 
 To run, pull up the terminal and type:
 
-	cd <repository-name>
+	cd eyefx-app
 	npm i
 	npm run serve
