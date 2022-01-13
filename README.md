@@ -1,7 +1,7 @@
 # eyetracking webpage
 
-Novel HCI, UX testing and cognitive experimentation, all in one package.
-More information on the function of this package are present at: github.com/mknw/eyefx/readme.md
+Novel HCI and UX testing, all in one package.
+More information on the function of this package are present at: https://github.com/mknw/hackathon-submission-repo/tree/eyefx-submission-a6c9803fff9da13cc9a548ae63d351d3/EYEFX/Readme.md
 
 ## Usage
 
